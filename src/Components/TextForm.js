@@ -43,6 +43,7 @@ export default function TextForm(props) {
         let newText = document.querySelector("#myBox");
         newText.select();
         navigator.clipboard.writeText(newText.value);
+        document.getSelection().removeAllRanges();
         props.showAlert("Text copied to the clipboard!", "success");
     }
 
@@ -84,21 +85,21 @@ export default function TextForm(props) {
   return (
     <>
         <div className="container" style={{color: props.mode==="light"?"#042743":"white"}}>
-            <h1>{props.headings}</h1>
+            <h1 className="my-3">{props.headings}</h1>
             <div className="mb-3">
-                <textarea className="form-control" style={{backgroundColor: props.mode==="light"?"white":"grey", color: props.mode==="light"?"#042743":"white"}} value={text} onChange={handleOnChange} id="myBox" rows="8"></textarea>
+                <textarea className="form-control" style={{backgroundColor: props.mode==="light"?"white":"#13466e", color: props.mode==="light"?"#042743":"white"}} value={text} onChange={handleOnChange} id="myBox" rows="8"></textarea>
             </div>
-            <button className="btn btn-success mx-1" onClick={handleUpClick}>Convert to Uppercase</button>
+            <button disabled={text.length === 0} className="btn btn-success mx-1 my-1" onClick={handleUpClick}>Convert to Uppercase</button>
 
-            <button className="btn btn-success mx-1" onClick={handleLowClick}>Convert to Lowercase</button>
+            <button disabled={text.length === 0} className="btn btn-success mx-1 my-1" onClick={handleLowClick}>Convert to Lowercase</button>
 
-            <button className="btn btn-success mx-1" onClick={handleClearClick}>Clear text</button>
+            <button disabled={text.length === 0} className="btn btn-success mx-1 my-1" onClick={handleClearClick}>Clear text</button>
 
-            <button className="btn btn-success mx-1" onClick={handleCapClick}>Capitilize Case</button>
+            <button disabled={text.length === 0} className="btn btn-success mx-1 my-1" onClick={handleCapClick}>Capitilize Case</button>
 
-            <button className="btn btn-success mx-1" onClick={handleCopy}>Copy Text</button>
+            <button disabled={text.length === 0} className="btn btn-success mx-1 my-1" onClick={handleCopy}>Copy Text</button>
 
-            <button className="btn btn-success mx-1" onClick={handleExtraSpaces}>Remove Extra Spaces</button>
+            <button disabled={text.length === 0} className="btn btn-success mx-1 my-1" onClick={handleExtraSpaces}>Remove Extra Spaces</button>
         </div>
 
         <div className="container my-3" style={{color: props.mode==="light"?"#042743":"white"}}>
@@ -106,7 +107,7 @@ export default function TextForm(props) {
             <p>{wordCount()} words and {text.length} characters.</p>
             <p>{wordCount() * 0.008} minutes read</p>
             <h4>Preview</h4>
-            <p>{text.length > 0?text:"Enter something in the text box above to preview."}</p>
+            <p>{text.length > 0?text:"Nothing to preview."}</p>
         </div>
     </>
   )
